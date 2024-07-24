@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto N3</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        #resultado {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Ejemplos de JavaScript</h1>
+        
+        <!-- Sección de saludo y despedida -->
+        <div class="mt-4">
+            <input type="text" id="nombre" class="form-control" placeholder="Introduce tu nombre">
+            <button id="boton" class="btn btn-primary mt-2">Saludar</button>
+            <button id="boton2" class="btn btn-danger mt-2">Despedir</button>
+        </div>
+        
+        <!-- Sección de eventos del teclado -->
+        <div class="mt-4">
+            <input type="text" id="campoNombre" class="form-control" placeholder="Escribe algo (evento teclado)">
+            <div id="resultado"></div>
+        </div>
+        
+        <!-- Sección de formulario -->
+        <div class="mt-4">
+            <form id="form1">
+                <div class="form-group">
+                    <label for="user">Nombre:</label>
+                    <input type="text" id="user" class="form-control" placeholder="Introduce tu nombre">
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" class="form-control" placeholder="Introduce tu contraseña">
+                </div>
+                <button type="submit" id="btnForm" class="btn btn-success">Enviar Formulario</button>
+            </form>
+        </div>
+        
+        <!-- Sección de selección y almacenamiento -->
+        <div class="mt-4">
+            <select id="compania" class="form-control">
+                <option value="compania1">Compañía 1</option>
+                <option value="compania2">Compañía 2</option>
+                <option value="compania3">Compañía 3</option>
+            </select>
+            <div id="resultado"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Funciones básicas
+        function saludar() {
+            let nombre = document.getElementById("nombre").value;
+            alert("Holis " + nombre);
+        }
+
+        function despedir() {
+            let nombre = document.getElementById("nombre").value;
+            alert("Adiós, usted está despedido " + nombre + "!");
+        }
+
+        // Opción #1 => addEventListener
+        let boton = document.getElementById("boton");
+        boton.addEventListener("click", saludar);
+        boton.addEventListener("dblclick", despedir);
+
+        let boton2 = document.getElementById("boton2");
+        boton2.addEventListener("click", despedir);
+
+        // Opción #2 => propiedad onclick
+        // boton.onclick = saludar;
+
+        // Eventos del Mouse
+        // boton.addEventListener("mouseup", () => {
+        //     console.log("Hiciste click (UP)");
+        // });
+        // boton.addEventListener("mousedown", () => {
+        //     console.log("Hiciste click (DOWN)");
+        // });
+        // boton.addEventListener("mouseover", () => {
+        //     console.log("Detectamos ingreso del mouse");
+        //     boton.className = "btn btn-danger";
+        // });
+        // boton.addEventListener("mouseout", () => {
+        //     console.log("Detectamos salida del mouse");
+        //     boton.className = "btn btn-primary";
+        // });
+
+        // Eventos del Teclado
+        let campoNombre = document.getElementById("campoNombre");
+        campoNombre.addEventListener("keydown", () => {
+            console.log("Detectamos que se ha presionado una tecla");
+        });
+        campoNombre.onkeyup = () => {
+            console.log("Detectamos que se ha soltado una tecla");
+        };
+
+        // Evento Oninput
+        campoNombre.oninput = () => {
+            let maximo = 140;
+            let longTexto = campoNombre.value.length;
+            let diff = maximo - longTexto;
+            document.getElementById("resultado").innerHTML = "Caracteres disponibles: " + diff;
+        };
+
+        // Evento Onchange
+        let compania = document.getElementById("compania");
+        compania.onchange = () => {
+            document.getElementById("resultado").innerHTML = "Seleccionaste: <b>" + compania.value + "</b>";
+        };
+
+        // Eventos con Formularios
+        let formulario = document.getElementById("form1");
+
+        function validarFormulario(evento) {
+            evento.preventDefault();
+
+            if (formulario.children[0].value == "") {
+                alert("Ingrese un valor para el Campo Nombre!");
+                return false;
+            }
+
+            if (formulario.children[1].value == "") {
+                alert("Ingrese un valor para el Campo Contraseña!");
+                return false;
+            } else if (formulario.children[1].value.length < 6) {
+                alert("Ingrese una contraseña mayor o igual a 6 caracteres!");
+                return false;
+            }
+
+            formulario.submit(); // Enviar el formulario
+        }
+
+        formulario.onsubmit = validarFormulario;
+
+        // LocalStorage
+        // Crear una localStorage
+        /*
+        localStorage.setItem("academia", "Coderhouse");
+        localStorage.setItem("curso", "Curso De Aprendizaje");
+        localStorage.setItem("alumnos", 100);
+        localStorage.setItem("estudian", false);
+        */
+
+        // Leer una localStorage
+        /*
+        let academy = localStorage.getItem("academia");
+        let course = localStorage.getItem("curso");
+        let mensaje = "Estoy realizando el " + course + " en " + academy;
+        alert(mensaje);
+        */
+
+        // Crear una sessionStorage
+        /*
+        sessionStorage.setItem("academia", "CODERHOUSE");
+        sessionStorage.setItem("curso", "Curso de JavaScript");
+        sessionStorage.setItem("alumnos", 100);
+        sessionStorage.setItem("estudian", false);
+        */
+
+        // Leer una sessionStorage
+        /*
+        let academy = sessionStorage.getItem("academia");
+        let course = sessionStorage.getItem("curso");
+        let mensaje = "Estoy realizando el " + course + " en " + academy;
+        alert(mensaje);
+        */
+
+        // Actualización de una localStorage
+        // localStorage.setItem("curso", "Curso de JavaScript");
+        // localStorage.setItem("curso2", "Curso de JavaScript + TypeScript");
+
+        // Obtener cuántas localStorage hay en el navegador
+        // alert("Total de localStorages: " + localStorage.length);
+
+        // Recorriendo las localStorage
+        /*
+        for (let i = 0; i < localStorage.length; i++) {
+            let clave = localStorage.key(i);
+            console.log("Clave: " + clave + " - Valor: " + localStorage.getItem(clave));
+        }
+        */
+
+        // Problemas posibles con localStorage/sessionStorage (siempre guardan datos en formato String)
+        /*
+        let alumnos = localStorage.getItem("cantAlumnos");
+        console.log(100);
+        console.log(alumnos);
+        let nuevoAlumnos = 10;
+        let totalAlumnos = parseInt(alumnos) + nuevoAlumnos;
+        console.log(totalAlumnos);
+        console.log(localStorage.getItem("estudian"));
+
+        let bebida = { id: 1, nombre: "Coca Cola", precio: 1800 };
+        localStorage.setItem("bebida", JSON.stringify(bebida)); // Guardar como JSON
+
+        let bebidas = [
+            { id: 1, nombre: "Coca Cola", precio: 1800 },
+            { id: 2, nombre: "Pepsi", precio: 1700 }
+        ];
+        localStorage.setItem("bebidas", JSON.stringify(bebidas)); // Guardar como JSON
+        */
+
+        // Eliminando localStorages
+        /*
+        localStorage.removeItem("bebida");
+        localStorage.removeItem("bebidas");
+        localStorage.clear(); // Elimina todas las localStorage
+        */
+
+        // Otra forma de crear/modificar localStorages
+        /*
+        localStorage.setItem("curso", "Desarrollo Web");
+        localStorage.curso = "JavaScript";
+        localStorage.proximoCurso = "React JS";
+        */
+
+        // Otra forma de leer localStorages
+        // alert(localStorage.curso);
+
+        // Conversión y Parseo de JSON
+        // Definir un Objeto, convertir a JSON y parsear para obtener su valor original
+        /*
+        let bebida = { id: 1, nombre: "Coca Cola", precio: 1800 };
+        localStorage.setItem("bebida", JSON.stringify(bebida)); // Convertir objeto a JSON
+        let valor = JSON.parse(localStorage.getItem("bebida")); // Parsear JSON
+        console.log(valor);
+        console.log(valor.nombre + " $" + valor.precio);
+        */
+
+        // Ejemplo de una clase en JavaScript
+        /*
+        class Producto {
+            constructor(nombre, precio) {
+                this.nombre = nombre;
+                this.precio = precio;
+            }
+
+            calcularIVA() {
+                return this.precio * 0.21;
+            }
+        }
+
+        class ProductoConIVA extends Producto {
+            constructor(nombre, precio) {
+                super(nombre, precio);
+                this.iva = this.calcularIVA();
+            }
+
+            sumarIVA() {
+                this.precio += this.iva;
+            }
+        }
+
+        let productos = [
+            new ProductoConIVA("Coca Cola", 1800),
+            new ProductoConIVA("Pepsi", 1700)
+        ];
+
+        for (const producto of productos) {
+            producto.sumarIVA();
+            console.log(producto);
+        }
+        */
+    </script>
+</body>
+</html>
